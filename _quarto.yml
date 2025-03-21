@@ -1,0 +1,35 @@
+project:
+  type: website
+  # search: 
+  #   location: navbar
+  #   type: overlay
+
+website:
+  title: "Lan Dinh"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: projects.qmd
+        text: Projects
+      - href: resume.qmd
+        text: Resume
+      
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/lannd3217
+      - icon: linkedin
+        href: https://www.linkedin.com/in/lan-dinh3217/
+
+
+format:
+  html:
+    theme:
+      - cosmo
+      - brand
+    css: styles.css
+    toc: true
+
+
+

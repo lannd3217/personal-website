@@ -1,0 +1,39 @@
+---
+title: "Lan Dinh"
+image: images/profile_picture.png
+about:
+  template: jolla
+  image-width: 20em
+  image-shape: round
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/lan-dinh3217/
+    - icon: Github
+      text: Github
+      href: https://github.com/lannd3217
+    - icon: envelope
+      text: Contact me
+      href: ngocld32@berkeley.edu
+---
+
+I’m a Data Scientist & Machine Learning Enthusiast passionate about turning raw data into meaningful insights. With experience in data analysis, machine learning, and visualization, I love solving complex problems and making data-driven decisions.
+
+## **Education:**
+
+M.S., Computer Science (Machine Learning) \| **Georgia Tech (Expected Dec 2027)**
+
+B.A., Data Science (Business & Industrial Analysis) \| **University of California, Berkeley (Dec 2024)**
+
+## **What I Do:**
+
+Build **machine learning models** to solve real-world problems\
+Design **data pipelines** for predictive analytics\
+Develop **interactive visualizations** to make data more accessible\
+Apply **statistical analysis & A/B testing** for data-driven insights
+
+## **Tech Stack:**
+
+**Languages:** Python, SQL\
+**Frameworks & Libraries:** Pandas, NumPy, Scikit-learn, PyTorch\
+**Tools:** Tableau, Jupyter Notebook, Google Colab
