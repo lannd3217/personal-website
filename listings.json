@@ -1,6 +1,9 @@
 [
   {
     "listing": "/projects.html",
-    "items": []
+    "items": [
+      "/posts/chronic-absenteeism/index.html",
+      "/posts/chronic-absenteeism/DataExploration.html"
+    ]
   }
 ]
