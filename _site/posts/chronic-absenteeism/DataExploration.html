@@ -21,6 +21,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -219,7 +253,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="dataset-description" class="level2">
 <h2 class="anchored" data-anchor-id="dataset-description">Dataset Description</h2>
-<p>This data exploration uses a combined dataset (<code>schools</code>) that merges individual CSV files from seven different schools:</p>
+<p>The dataset in this study is collected from seven schools in the Oakland Unified School District over seven years, from 2012 to 2024. The seven schools are:</p>
 <ul>
 <li><strong>Castlemont</strong><br>
 </li>
@@ -272,7 +306,33 @@ ul.task-list li input[type="checkbox"] {
 <li><strong>ChroAbs:</strong> Binary variable (1 if absent more than 10% of enrolled days, 0 otherwise).</li>
 </ul>
 <hr>
-<div id="cell-4" class="cell" data-outputid="068f0550-8753-4855-d6d4-4e75a0f04cbf">
+</section>
+<section id="dataset-overview" class="level2">
+<h2 class="anchored" data-anchor-id="dataset-overview">1. Dataset Overview</h2>
+<div id="cell-3" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ipywidgets <span class="im">as</span> widgets</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> ipywidgets <span class="im">import</span> interact, interact_manual</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-4" class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load 7 schools dataset</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>castlemont <span class="op">=</span> pd.read_csv(<span class="st">'data/Castlemont.csv'</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>eof <span class="op">=</span> pd.read_csv(<span class="st">'data/East Oakland PRIDE.csv'</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>elmhurst_united <span class="op">=</span> pd.read_csv(<span class="st">'data/Elmhurst United.csv'</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>mlk <span class="op">=</span> pd.read_csv(<span class="st">'data/MLK.csv'</span>)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>mcClymonds <span class="op">=</span> pd.read_csv(<span class="st">'data/McClymonds.csv'</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>prescott <span class="op">=</span> pd.read_csv(<span class="st">'data/Prescott.csv'</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>woms <span class="op">=</span> pd.read_csv(<span class="st">'data/ONGB -Lan/WOMS.csv'</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># castlemont.head()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-5" class="cell" data-outputid="068f0550-8753-4855-d6d4-4e75a0f04cbf">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Concatenate into one dataframe</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>schools <span class="op">=</span> pd.concat([castlemont, eof, elmhurst_united, mlk, mcClymonds, prescott, woms]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>schools.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="149">
 
   <div id="df-7f47e2c8-9cb2-475d-875c-45249101c617" class="colab-df-container">
@@ -601,7 +661,17 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </div>
 </div>
-<div id="cell-5" class="cell" data-outputid="ac27eb6a-7376-4ae9-ec14-c3af9fed1105">
+<div id="cell-6" class="cell" data-outputid="ac27eb6a-7376-4ae9-ec14-c3af9fed1105">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add age (school year - birthdate) column</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> calculate_age(df):</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  df[<span class="st">'Birthdate'</span>] <span class="op">=</span> pd.to_datetime(df[<span class="st">'Birthdate'</span>])</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  end_year <span class="op">=</span> df[<span class="st">'Year'</span>].<span class="bu">str</span>.split(<span class="st">'-'</span>).<span class="bu">str</span>[<span class="dv">0</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  year <span class="op">=</span> end_year.<span class="bu">apply</span>(<span class="kw">lambda</span> x: <span class="dv">2000</span> <span class="op">+</span> x)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  df[<span class="st">'Age'</span>] <span class="op">=</span> year <span class="op">-</span> df[<span class="st">'Birthdate'</span>].dt.year</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">return</span> df</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>schools <span class="op">=</span> calculate_age(schools)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>schools.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="150">
 
   <div id="df-eed9d755-e565-491f-99b1-9fa950c9cc05" class="colab-df-container">
@@ -936,7 +1006,11 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </div>
 </div>
-<div id="cell-6" class="cell" data-outputid="e36038ef-9871-428c-ce0d-8a23e83adaba">
+<div id="cell-7" class="cell" data-outputid="e36038ef-9871-428c-ce0d-8a23e83adaba">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Add ChroAbs column with 1 is student who absent for more than 10% of enrolled days</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>abs_per <span class="op">=</span> schools[<span class="st">'DaysAbs'</span>] <span class="op">/</span> schools[<span class="st">'DaysEnr'</span>]</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>schools[<span class="st">'ChroAbs'</span>] <span class="op">=</span> [<span class="dv">1</span> <span class="cf">if</span> x <span class="op">&gt;</span> <span class="fl">0.1</span> <span class="cf">else</span> <span class="dv">0</span> <span class="cf">for</span> x <span class="kw">in</span> abs_per]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>schools.tail(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="151">
 
   <div id="df-28c694d0-e760-44b2-9288-d247b36342c9" class="colab-df-container">
@@ -1277,79 +1351,29 @@ ul.task-list li input[type="checkbox"] {
   </div>
 </div>
 </div>
-</section>
-<section id="dataset-overview" class="level2">
-<h2 class="anchored" data-anchor-id="dataset-overview">1. Dataset Overview</h2>
-<div id="cell-8" class="cell" data-outputid="924ee023-7365-4d97-9649-23bab7642127">
-<div class="cell-output cell-output-display" data-execution_count="152">
-<pre><code>(21994, 17)</code></pre>
-</div>
-</div>
-<div id="cell-9" class="cell" data-outputid="33366267-7849-4cff-d972-53cac5c8567e">
-<div class="cell-output cell-output-stdout">
-<pre><code>Castlemont (6456, 17)
-East Oakland PRIDE (2634, 17)
-Elmhurst United (4989, 17)
-MLK (2720, 17)
-McClymonds (2566, 17)
-Prescott (1079, 17)
-WOMS (1550, 17)</code></pre>
-</div>
-</div>
-<div id="cell-10" class="cell" data-outputid="9bb55803-1e84-4448-bf21-8648d69a43ab">
-<div class="cell-output cell-output-stdout">
-<pre><code>Castlemont 17-18 (984, 17)
-Castlemont 18-19 (994, 17)
-Castlemont 19-20 (931, 17)
-Castlemont 20-21 (874, 17)
-Castlemont 21-22 (896, 17)
-Castlemont 22-23 (903, 17)
-Castlemont 23-24 (874, 17)
-East Oakland PRIDE 17-18 (402, 17)
-East Oakland PRIDE 18-19 (406, 17)
-East Oakland PRIDE 19-20 (393, 17)
-East Oakland PRIDE 20-21 (351, 17)
-East Oakland PRIDE 21-22 (353, 17)
-East Oakland PRIDE 22-23 (353, 17)
-East Oakland PRIDE 23-24 (376, 17)
-Elmhurst United 17-18 (429, 17)
-Elmhurst United 18-19 (432, 17)
-Elmhurst United 19-20 (825, 17)
-Elmhurst United 20-21 (805, 17)
-Elmhurst United 21-22 (826, 17)
-Elmhurst United 22-23 (839, 17)
-Elmhurst United 23-24 (833, 17)
-MLK 17-18 (321, 17)
-MLK 18-19 (380, 17)
-MLK 19-20 (453, 17)
-MLK 20-21 (397, 17)
-MLK 21-22 (397, 17)
-MLK 22-23 (379, 17)
-MLK 23-24 (393, 17)
-McClymonds 17-18 (419, 17)
-McClymonds 18-19 (408, 17)
-McClymonds 19-20 (391, 17)
-McClymonds 20-21 (400, 17)
-McClymonds 21-22 (357, 17)
-McClymonds 22-23 (302, 17)
-McClymonds 23-24 (289, 17)
-Prescott 17-18 (209, 17)
-Prescott 18-19 (182, 17)
-Prescott 19-20 (147, 17)
-Prescott 20-21 (135, 17)
-Prescott 21-22 (119, 17)
-Prescott 22-23 (127, 17)
-Prescott 23-24 (160, 17)
-WOMS 17-18 (218, 17)
-WOMS 18-19 (232, 17)
-WOMS 19-20 (235, 17)
-WOMS 20-21 (235, 17)
-WOMS 21-22 (221, 17)
-WOMS 22-23 (210, 17)
-WOMS 23-24 (199, 17)</code></pre>
-</div>
-</div>
-<div id="cell-11" class="cell" data-outputid="360e18e5-6ebb-4795-84fc-db259ceb3257">
+<p>Initially, I observed that Attendance Rate and Days Absent are critical measures as they are directly linked to Chronic Absenteeism. GPA (CurrWeightedTotGPA) variable is important as I assume that lower academic performance is typically associated with higher absenteeism. Demographic factors such as Gender and Ethnicity provide context for understanding potential disparities in academic performance as well as absenteeism patterns. Fluency is another significant variable, as language barriers often correlate with performance challenges, especially for non-native speakers. The SpEd reports whether students have special educational needs, and SED indicates economic disadvantage, both of which can substantially impact educational engagement. Economic hardship, for example, has been linked to lower attendance rates and higher absenteeism.</p>
+<p>Furthermore, the dataset have missing or inconsistent values that need to be addressed. DaysEnr variable has unusually low numbers, which could make absenteeism rates appear higher than they are. Susp has the highest number of missing values (20,556 records). There are 6,441 missing values in CurrWeightedTotGPA, accounting for a large portion of the dataset. Each of the AttRate, DaysEnr, and DaysAbs has 29 missing entries. In terms of inconsistent values, SED column has 6,317 entries labeled as Unknown. In the Fluency column, there are 100 entries marked as TBD and 6 as Unknown. These missing and inconsistent values will be addressed further</p>
+<div id="cell-9" class="cell" data-outputid="360e18e5-6ebb-4795-84fc-db259ceb3257">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, HTML</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate HTML for each column's value counts</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>html_output <span class="op">=</span> <span class="st">"&lt;div style='display: flex; flex-wrap: wrap;'&gt;"</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the value counts for the column</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> schools[col].value_counts()</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an HTML table for the value counts of each column</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    html_output <span class="op">+=</span> <span class="ss">f"""</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;div style='margin-right: 20px; padding: 10px; border: 1px solid #ddd;'&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;h4&gt;</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">&lt;/h4&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="sc">{</span>counts<span class="sc">.</span>to_frame()<span class="sc">.</span>to_html(header<span class="op">=</span><span class="va">False</span>)<span class="sc">}</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;/div&gt;</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>html_output <span class="op">+=</span> <span class="st">"&lt;/div&gt;"</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Display all counts side by side in HTML format</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>display(HTML(html_output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div style="display: flex; flex-wrap: wrap;">
     <div style="margin-right: 20px; padding: 10px; border: 1px solid #ddd;">
@@ -1798,7 +1822,9 @@ WOMS 23-24 (199, 17)</code></pre>
     </div>
 </div>
 </div>
-<div id="cell-12" class="cell" data-outputid="7a484582-14e7-4904-a11d-b87b69b37d3d">
+<div id="cell-10" class="cell" data-outputid="7a484582-14e7-4904-a11d-b87b69b37d3d">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Info for all schools over past 7 years</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>schools.info()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'pandas.core.frame.DataFrame'&gt;
 RangeIndex: 21994 entries, 0 to 21993
@@ -1826,7 +1852,9 @@ dtypes: datetime64[ns](1), float64(5), int64(4), object(7)
 memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
-<div id="cell-13" class="cell" data-outputid="82db09a6-ee62-4c15-8653-d642b5ffa47a">
+<div id="cell-11" class="cell" data-outputid="82db09a6-ee62-4c15-8653-d642b5ffa47a">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Missing values total</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>schools.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="365">
 <div>
 
@@ -1913,7 +1941,9 @@ memory usage: 2.9+ MB</code></pre>
 </div><br><label><b>dtype:</b> int64</label>
 </div>
 </div>
-<div id="cell-14" class="cell" data-outputid="b9853f56-6acf-47e1-94fd-f823c0277a91">
+<div id="cell-12" class="cell" data-outputid="b9853f56-6acf-47e1-94fd-f823c0277a91">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Missing values percentage</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>schools.isna().mean()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="366">
 <div>
 
@@ -2006,7 +2036,112 @@ memory usage: 2.9+ MB</code></pre>
 </section>
 <section id="a-numerical-distributions-attendance-rate-days-enrolled-days-absent" class="level2">
 <h2 class="anchored" data-anchor-id="a-numerical-distributions-attendance-rate-days-enrolled-days-absent">2.a Numerical Distributions: Attendance Rate, Days Enrolled, Days Absent</h2>
-<div id="cell-17" class="cell" data-outputid="ca8fafe6-d370-43f8-f2c5-c320c404f4af">
+<div id="cell-15" class="cell" data-outputid="ca8fafe6-d370-43f8-f2c5-c320c404f4af">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_distribution_and_summary(df, col, title<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots the distribution histogram and statistical summary for a specified column.</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - df: DataFrame containing the data</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - col: str, the name of the column to plot and summarize</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">    - title: modified title for the plot</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Calculate the statistical summary for the specified column</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>    summary_stats <span class="op">=</span> df[col].describe()</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up a figure with 2 subplots: 1 for the plot, 1 for the text</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>    fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">14</span>, <span class="dv">6</span>), gridspec_kw<span class="op">=</span>{<span class="st">'width_ratios'</span>: [<span class="dv">3</span>, <span class="dv">1</span>]})</span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the histogram for the specified column</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> title:</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>        ax1.set_title(title, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a>        ax1.set_title(<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> Overall Distribution'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>    ax1.set_xlabel(<span class="ss">f'</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>    ax1.set_ylabel(<span class="st">'Frequency'</span>, fontsize<span class="op">=</span><span class="dv">16</span>)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>    sns.histplot(data<span class="op">=</span>df, x<span class="op">=</span>col, ax<span class="op">=</span>ax1)</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a>    ax1.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-26"><a href="#cb11-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Display the statistical summary on the right subplot</span></span>
+<span id="cb11-27"><a href="#cb11-27" aria-hidden="true" tabindex="-1"></a>    ax2.axis(<span class="st">'off'</span>)  <span class="co"># Turn off the axis for the text display</span></span>
+<span id="cb11-28"><a href="#cb11-28" aria-hidden="true" tabindex="-1"></a>    summary_text <span class="op">=</span> summary_stats.to_string()</span>
+<span id="cb11-29"><a href="#cb11-29" aria-hidden="true" tabindex="-1"></a>    ax2.text(<span class="dv">0</span>, <span class="fl">0.5</span>, summary_text, fontsize<span class="op">=</span><span class="dv">12</span>, va<span class="op">=</span><span class="st">'center'</span>, ha<span class="op">=</span><span class="st">'left'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'navy'</span>)</span>
+<span id="cb11-30"><a href="#cb11-30" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-31"><a href="#cb11-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adjust layout and show the plot</span></span>
+<span id="cb11-32"><a href="#cb11-32" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb11-33"><a href="#cb11-33" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb11-34"><a href="#cb11-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-35"><a href="#cb11-35" aria-hidden="true" tabindex="-1"></a><span class="co"># Attendance Overall Distribution</span></span>
+<span id="cb11-36"><a href="#cb11-36" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools, <span class="st">'AttRate'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DataExploration_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-16" class="cell" data-outputid="4a8ea6c5-9189-4c4c-a50b-105edfdcce4f">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_boxplot_with_counts(df, numerical_col, categorical_col):</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots a boxplot for a numerical column grouped by a categorical column</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co">    along with the count of each category.</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - df: DataFrame containing the data</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="co">    - numerical_col: str, the name of the numerical column to plot</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="co">    - categorical_col: str, the name of the categorical column to group by</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Define the category order based on the boxplot</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>    category_order <span class="op">=</span> df[categorical_col].value_counts().index.tolist()</span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set up the figure with two subplots: one for the boxplot and one for the bar plot</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>    fig, (ax1, ax2) <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>), gridspec_kw<span class="op">=</span>{<span class="st">'width_ratios'</span>: [<span class="dv">3</span>, <span class="dv">1</span>]})</span>
+<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the boxplot for the numerical column by the categorical column</span></span>
+<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a>    sns.boxplot(data<span class="op">=</span>df, y<span class="op">=</span>categorical_col, x<span class="op">=</span>numerical_col, ax<span class="op">=</span>ax1, hue <span class="op">=</span>categorical_col, palette<span class="op">=</span><span class="st">"vlag"</span>, order<span class="op">=</span>category_order)</span>
+<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a>    ax1.set_title(<span class="ss">f'Boxplot of </span><span class="sc">{</span>numerical_col<span class="sc">}</span><span class="ss"> by </span><span class="sc">{</span>categorical_col<span class="sc">}</span><span class="ss">'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a>    ax1.set_xlabel(categorical_col, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a>    ax1.set_ylabel(numerical_col, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a>    ax1.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Plot the count of each category as a bar plot</span></span>
+<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a>    sns.countplot(data<span class="op">=</span>df, y<span class="op">=</span>categorical_col, order<span class="op">=</span>category_order, ax<span class="op">=</span>ax2, hue<span class="op">=</span>categorical_col, palette<span class="op">=</span><span class="st">'vlag'</span>)</span>
+<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a>    ax2.set_title(<span class="ss">f'Counts of Each </span><span class="sc">{</span>categorical_col<span class="sc">}</span><span class="ss"> Category'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>    ax2.set_xlabel(categorical_col, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a>    ax2.set_ylabel(<span class="st">'Count'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>)</span>
+<span id="cb12-30"><a href="#cb12-30" aria-hidden="true" tabindex="-1"></a>    ax2.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb12-31"><a href="#cb12-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-32"><a href="#cb12-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Adjust layout and display the plots</span></span>
+<span id="cb12-33"><a href="#cb12-33" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-36"><a href="#cb12-36" aria-hidden="true" tabindex="-1"></a><span class="co"># Attendance Distributions by School</span></span>
+<span id="cb12-37"><a href="#cb12-37" aria-hidden="true" tabindex="-1"></a>plot_boxplot_with_counts(schools, <span class="st">'AttRate'</span>, <span class="st">'School'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DataExploration_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Observation: The boxplot shows the distribution of attendance rates across different schools. Elmhurst United displays a higher median attendance rate while Castlemont has the lowest median attendance rate with largest variability. Note that Castlemont also has the highest number of data among other schools.</p>
+<div id="cell-18" class="cell" data-outputid="47b1d974-8076-4fef-c001-82d2687b808c">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Days Absent Overall Distribution</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools, <span class="st">'DaysAbs'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="DataExploration_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-19" class="cell" data-outputid="b2916e57-71fb-444d-d0ee-bcee6a83983f">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Days Absent Distribution by School</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>plot_boxplot_with_counts(schools, <span class="st">'DaysAbs'</span>, <span class="st">'School'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2015,7 +2150,10 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-18" class="cell" data-outputid="4a8ea6c5-9189-4c4c-a50b-105edfdcce4f">
+<p>Observation: The distribution of Days Absent closely mirrors that of Attendance Rate, indicating a strong dependency between the two. We can consider dropping the DaysAbs column later to avoid redundancy.</p>
+<div id="cell-21" class="cell" data-outputid="b2a98404-da10-4419-f4bf-77c46978341f">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Days Enrolled Overall Distribution</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools, <span class="st">'DaysEnr'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2024,7 +2162,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-19" class="cell" data-outputid="47b1d974-8076-4fef-c001-82d2687b808c">
+<div id="cell-22" class="cell" data-outputid="49a48941-547d-40e2-bd11-1d39839ae067">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Days Enrolled Distribution by School</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>plot_boxplot_with_counts(schools, <span class="st">'DaysEnr'</span>, <span class="st">'School'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2033,7 +2173,23 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-20" class="cell" data-outputid="b2916e57-71fb-444d-d0ee-bcee6a83983f">
+<p>Observation: The Days Enrolled column contains numerous unusually low values. This raises questions about the underlying causes (further research on how schools report days enrolled may be necessary). We may also need to reconsider the definition of chronic absenteeism (where the ratio of days absent to days enrolled is greater than 10%), as low values for days enrolled could disproportionately impact the chronic absenteeism rate.</p>
+<p>Key findings including:</p>
+<ul>
+<li>Most students have high attendance rates, though certain schools show significant absenteeism challenges.</li>
+<li>Variability in absenteeism and enrollment suggests that some schools might face systemic issues with student attendance and retention.</li>
+<li>The distribution of enrolled days highlights potential inconsistencies in data reporting, which could affect the accuracy of absenteeism measurements.</li>
+</ul>
+</section>
+<section id="b.-time-series-over-year-attendance-rate-and-chronic-absenteeism-percentage" class="level2">
+<h2 class="anchored" data-anchor-id="b.-time-series-over-year-attendance-rate-and-chronic-absenteeism-percentage">2b. Time Series over Year: Attendance Rate and Chronic Absenteeism Percentage</h2>
+<div id="cell-26" class="cell" data-outputid="c6eb5ef7-27a0-432d-8306-45ae5e3e64e4">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time series plot for attendate rate, aggregating by median</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Attentance Rate Across Schools Over 7 Years'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>schools, x<span class="op">=</span><span class="st">'Year'</span>, y<span class="op">=</span><span class="st">'AttRate'</span>, hue<span class="op">=</span><span class="st">'School'</span>, estimator<span class="op">=</span><span class="st">'median'</span>, errorbar<span class="op">=</span><span class="va">None</span>,  marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2042,8 +2198,11 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<p>Observation: The distribution of Days Absent closely mirrors that of Attendance Rate, indicating a strong dependency between the two. We can consider dropping the DaysAbs column later to avoid redundancy.</p>
-<div id="cell-22" class="cell" data-outputid="b2a98404-da10-4419-f4bf-77c46978341f">
+<section id="dive-deeper-into-mlk-and-castlemont-attendance-rate-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="dive-deeper-into-mlk-and-castlemont-attendance-rate-distribution">Dive deeper into MLK and Castlemont Attendance Rate Distribution</h3>
+<div id="cell-28" class="cell" data-outputid="0be694eb-fa96-4ada-d138-f14569046dd1">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine attendance rate at Castlemont, espcially year 20-21</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools[(schools[<span class="st">'School'</span>] <span class="op">==</span> <span class="st">'Castlemont'</span>) <span class="op">&amp;</span> (schools[<span class="st">'Year'</span>] <span class="op">==</span> <span class="st">'20-21'</span>)], <span class="st">'AttRate'</span>, <span class="st">"Attendance Rate at Castlemont in 20-21"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2052,7 +2211,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-23" class="cell" data-outputid="49a48941-547d-40e2-bd11-1d39839ae067">
+<div id="cell-29" class="cell" data-outputid="830cdaed-631c-477f-bf06-ea46b041c03c">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine attendance rate at MLK, espcially year 22-23</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools[(schools[<span class="st">'School'</span>] <span class="op">==</span> <span class="st">'MLK'</span>) <span class="op">&amp;</span> (schools[<span class="st">'Year'</span>] <span class="op">==</span> <span class="st">'22-23'</span>)], <span class="st">'AttRate'</span>, <span class="st">"Attendance Rate at MLK in 22-23"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2061,11 +2222,14 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<p>Observation: The Days Enrolled column contains numerous unusually low values. This raises questions about the underlying causes (further research on how schools report days enrolled may be necessary). We may also need to reconsider the definition of chronic absenteeism (where the ratio of days absent to days enrolled is greater than 10%), as low values for days enrolled could disproportionately impact the chronic absenteeism rate.</p>
-</section>
-<section id="b.-time-series-over-year-attendance-rate-and-chronic-absenteeism-percentage" class="level2">
-<h2 class="anchored" data-anchor-id="b.-time-series-over-year-attendance-rate-and-chronic-absenteeism-percentage">2b. Time Series over Year: Attendance Rate and Chronic Absenteeism Percentage</h2>
-<div id="cell-26" class="cell" data-outputid="c6eb5ef7-27a0-432d-8306-45ae5e3e64e4">
+<div id="cell-30" class="cell" data-outputid="6e3862dd-67b6-424f-8d0a-6d6086be386f">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Time series plot for Days Enrolled, aggregating by median</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Days Enrolled Across Schools Over 7 Years'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>schools, x<span class="op">=</span><span class="st">'Year'</span>, y<span class="op">=</span><span class="st">'DaysEnr'</span>, hue<span class="op">=</span><span class="st">'School'</span>, estimator<span class="op">=</span><span class="st">'median'</span>, errorbar<span class="op">=</span><span class="va">None</span>,  marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2074,9 +2238,14 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<section id="dive-deeper-into-mlk-and-castlemont-attendance-rate-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="dive-deeper-into-mlk-and-castlemont-attendance-rate-distribution">Dive deeper into MLK and Castlemont Attendance Rate Distribution</h3>
-<div id="cell-28" class="cell" data-outputid="0be694eb-fa96-4ada-d138-f14569046dd1">
+<div id="cell-31" class="cell" data-outputid="fdd38511-c0d6-45c0-fef3-c893c5bd3fbf">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># ChronicAbsent Percentage by Year</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Chronic Absenteeism Percentage Across Schools Over 7 Years'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>sns.lineplot(data<span class="op">=</span>schools, x<span class="op">=</span><span class="st">'Year'</span>, y<span class="op">=</span><span class="st">'ChroAbs'</span>, hue<span class="op">=</span><span class="st">'School'</span>, estimator<span class="op">=</span><span class="st">'mean'</span>, errorbar<span class="op">=</span><span class="va">None</span>,  marker<span class="op">=</span><span class="st">'o'</span>, linewidth<span class="op">=</span><span class="fl">0.7</span>)</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>plt.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))</span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2085,7 +2254,39 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-29" class="cell" data-outputid="830cdaed-631c-477f-bf06-ea46b041c03c">
+<p>Quick observation: Even though 19-20 has lowest median days enrolled but the percentage of chronically absent student are under 40%. School years 21-22 and 22-23 have high chronic absenteeism percentage.</p>
+<p>Key Findings:</p>
+<ul>
+<li>Attendance Trends: Attendance rates fluctuated over the seven-year period, with notable declines during the 2018-19 and 2021-22 school years. These dips, particularly during the pandemic years, indicate district-wide challenges in maintaining student engagement.</li>
+<li>Days Enrolled: Enrollment days remained stable at around 180 for most years, except for a sharp drop in 2019-20, indicating potential mid-year closures or interruptions.</li>
+<li>Castlemont-Specific Challenges: Castlemont consistently displayed lower attendance rates and higher chronic absenteeism, especially in 2020-21, signaling a need for targeted interventions. The school’s unique struggles may be due to underlying socio-economic conditions, resource gaps, or other external factors.</li>
+</ul>
+</section>
+</section>
+<section id="c.-demographic-factors-gender-ethnicity-fluency-special-education-and-socio-economically-disadvantaged-status" class="level2">
+<h2 class="anchored" data-anchor-id="c.-demographic-factors-gender-ethnicity-fluency-special-education-and-socio-economically-disadvantaged-status">2c. Demographic Factors: Gender, Ethnicity, Fluency, Special Education and Socio-economically Disadvantaged Status</h2>
+<div id="cell-34" class="cell" data-outputid="8631d350-d822-4356-83d1-f0b28729b395">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_bar(df, col, title<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Plots a bar chart for a specified column.</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Parameters:</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="co">    - df: DataFrame containing the data</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co">    - col: str, the name of the column to plot</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="co">    - title: modified title for the plot</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> title:</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>        plt.title(title, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>        plt.title(<span class="ss">f'Counts of </span><span class="sc">{</span>col<span class="sc">}</span><span class="ss"> per School over 7 Years'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>    sns.countplot(data<span class="op">=</span>df, y<span class="op">=</span><span class="st">'School'</span>, hue<span class="op">=</span>col, palette<span class="op">=</span><span class="st">'Paired'</span>)</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>    plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>    plt.legend(loc<span class="op">=</span><span class="st">'upper left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="fl">1.05</span>, <span class="dv">1</span>))</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot of Gender per School</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a>plot_bar(schools, <span class="st">'Gen'</span>, <span class="st">"Counts of Gender per School over 7 Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2094,7 +2295,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-30" class="cell" data-outputid="6e3862dd-67b6-424f-8d0a-6d6086be386f">
+<div id="cell-35" class="cell" data-outputid="16bce12f-92e5-420c-d925-74b967d4084b">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot of Ethnicity per School</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>plot_bar(schools, <span class="st">'Eth'</span>, <span class="st">"Counts of Ethnicity per School over 7 Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2103,7 +2306,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-31" class="cell" data-outputid="fdd38511-c0d6-45c0-fef3-c893c5bd3fbf">
+<div id="cell-36" class="cell" data-outputid="b102aca9-dc82-45c5-bbaa-d4daaefd49b7">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot of Fluency per School</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>plot_bar(schools, <span class="st">'Fluency'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2112,12 +2317,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<p>Quick observation: Even though 19-20 has lowest median days enrolled but the percentage of chronically absent student are under 40%. School years 21-22 and 22-23 have high chronic absenteeism percentage.</p>
-</section>
-</section>
-<section id="c.-demographic-factors-gender-ethnicity-fluency-special-education-and-socio-economically-disadvantaged-status" class="level2">
-<h2 class="anchored" data-anchor-id="c.-demographic-factors-gender-ethnicity-fluency-special-education-and-socio-economically-disadvantaged-status">2c. Demographic Factors: Gender, Ethnicity, Fluency, Special Education and Socio-economically Disadvantaged Status</h2>
-<div id="cell-34" class="cell" data-outputid="8631d350-d822-4356-83d1-f0b28729b395">
+<div id="cell-37" class="cell" data-outputid="da0e9b88-5368-4519-9297-7d3dbc172ce0">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot of Special Education per School</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>plot_bar(schools, <span class="st">'SpEd'</span>, <span class="st">"Counts of Special Education Status per School over 7 Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2126,7 +2328,9 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-35" class="cell" data-outputid="16bce12f-92e5-420c-d925-74b967d4084b">
+<div id="cell-38" class="cell" data-outputid="a7d68eed-3495-49e4-9580-8d08862c80c9">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bar plot of Socio-Economically Disadvantaged Counts per school</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>plot_bar(schools, <span class="st">'SED'</span>, <span class="st">"Socio-Economically Disadvantaged Status per School over 7 Years"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2135,7 +2339,30 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-36" class="cell" data-outputid="b102aca9-dc82-45c5-bbaa-d4daaefd49b7">
+<p>Key Findings:</p>
+<ul>
+<li>Gender Distribution: Most schools have a balanced distribution of male and female students, with Castlemont having the highest overall student count. The presence of a small number of “N” (likely representing non-binary or not reported) entries suggests that some schools are starting to account for gender diversity beyond the binary categories.</li>
+<li>Ethnic Diversity: African American and Latino students make up the majority across most schools, but their proportions vary significantly. Castlemont, East Oakland PRIDE, and Elmhurst United have a higher concentration of Latino students, while the rest have more African American students. Smaller ethnic groups, such as Pacific Islanders and Native Americans, are underrepresented, which may affect certain analyses if not accounted for properly.</li>
+<li>Language Fluency: English Only (EO) students dominate in all schools, particularly in MLK, McClymonds, Prescott, and WOMS. English Learners (EL) and Reclassified Fluent English Proficient (RFEP) are also significant, especially in Castlemont, East Oakland PRIDE, and Elmhurst United.</li>
+<li>Special Education (SpEd): A considerable number of students in each school are enrolled in special education programs, with Castlemont and Elmhurst United having the highest counts. However, the majority of students across all schools are classified as Not Special Ed. This distribution provides insights into the varied support needs within each school.</li>
+<li>Socio-Economically Disadvantaged (SED) Status: High counts of SED students are evident in all schools, indicating economic challenges in these communities. A large number of “Unknown” entries, particularly in Castlemont, may obscure true socio-economic trends and should be considered when analyzing the impact of SED on student outcomes.</li>
+</ul>
+</section>
+<section id="heat-map" class="level1">
+<h1>Heat Map</h1>
+<section id="numerical-data-pearsons-correlation-to-visualize-linear-relationship-of-each-pair." class="level3">
+<h3 class="anchored" data-anchor-id="numerical-data-pearsons-correlation-to-visualize-linear-relationship-of-each-pair.">Numerical Data: Pearson’s Correlation to Visualize Linear Relationship of Each Pair.</h3>
+<div id="cell-42" class="cell" data-outputid="4e4a1d39-a0e2-4925-c9d5-ab0432adaa28">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_corr(cols):</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  corr_df <span class="op">=</span> schools[cols]</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  corr_df.corr()</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  plt.figure(figsize<span class="op">=</span>(<span class="dv">15</span>, <span class="dv">9</span>))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  sns.heatmap(corr_df.corr(), cmap<span class="op">=</span><span class="st">'coolwarm'</span>, annot<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  plt.title(<span class="ss">f'Correlation Heat Map for Numerical Data'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)<span class="op">;</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Numerical data for correlation map</span></span>
+<span id="cb27-9"><a href="#cb27-9" aria-hidden="true" tabindex="-1"></a>corr_cols <span class="op">=</span> [<span class="st">'AttRate'</span>, <span class="st">'Age'</span>, <span class="st">'DaysEnr'</span>, <span class="st">'DaysAbs'</span>, <span class="st">'CurrWeightedTotGPA'</span>]</span>
+<span id="cb27-10"><a href="#cb27-10" aria-hidden="true" tabindex="-1"></a>plot_corr(corr_cols)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2144,7 +2371,62 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-37" class="cell" data-outputid="da0e9b88-5368-4519-9297-7d3dbc172ce0">
+<p>Observation: Pairs that has high correlation</p>
+<ul>
+<li>DaysAb and AttRate: This pair exhibits a high correlation due to their inherent dependency. Days absent (DaysAbs) is inversely related to attendance rate (AttRate), as a higher number of absences naturally lowers the attendance rate. This dependency is expected and reflects how these two variables capture similar information.</li>
+<li>DaysEnr and CurrWeightedTotGPA: There is a moderate positive linear relationship between days enrolled (DaysEnr) and cumulative GPA (CurrWeightedTotGPA), with a correlation of 0.43. While this shows that students enrolled for more days tend to have a higher GPA, this relationship is not directly relevant to our analysis of chronic absenteeism and may not be a primary focus.</li>
+<li>AttRate and CurrWeightedTotGPA: There is a positive linear relationship between attendance rate (AttRate) and GPA, with a correlation of 0.42. This suggests that better attendance is associated with higher academic performance, which aligns with the understanding that consistent attendance is beneficial for student success. This relationship is worth investigating further, as it may provide insights into how attendance impacts academic outcomes and possibly influences chronic absenteeism.</li>
+</ul>
+</section>
+<section id="categorical-correlations-using-theils-u-to-visualize-predictive-strength-between-two-categorical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="categorical-correlations-using-theils-u-to-visualize-predictive-strength-between-two-categorical-variables">Categorical Correlations: Using Theil’s U to Visualize Predictive Strength between Two Categorical Variables</h3>
+<p>Theil’s U is used to assess the relationship between categorical variables, offering insights into how one categorical variable can predict another. Theil’s U values range from 0 to 1, where 0 indicates no predictive power and 1 indicates perfect predictability. It’s important to note that Theil’s U is asymmetric, meaning the predictive power of variable A on variable B is not necessarily the same as the predictive power of B on A. This characteristic allows for a more nuanced understanding of relationships between categorical variables, where directionality matters.</p>
+<p>For more details on Theil’s U and its applications in evaluating categorical correlation, refer to this article: <a href="https://towardsdatascience.com/the-search-for-categorical-correlation-a1cf7f1888c9">The Search for Categorical Correlation.</a></p>
+<div id="cell-46" class="cell" data-outputid="e9cd0ea3-31e2-43ed-c3fa-c225b4a747fd">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Theil'U Heat Map for Categorical Variable</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> collections <span class="im">import</span> Counter</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> math</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Define Theil's U Calculation Function</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> conditional_entropy(x, y):</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    y_counter <span class="op">=</span> Counter(y)</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>    xy_counter <span class="op">=</span> Counter(<span class="bu">list</span>(<span class="bu">zip</span>(x, y)))</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    total_occurrences <span class="op">=</span> <span class="bu">sum</span>(y_counter.values())</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>    entropy <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> xy, xy_count <span class="kw">in</span> xy_counter.items():</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>        p_xy <span class="op">=</span> xy_count <span class="op">/</span> total_occurrences</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>        p_y <span class="op">=</span> y_counter[xy[<span class="dv">1</span>]] <span class="op">/</span> total_occurrences</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>        entropy <span class="op">+=</span> p_xy <span class="op">*</span> math.log(p_y <span class="op">/</span> p_xy)</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> entropy</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> theils_u(x, y):</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>    s_xy <span class="op">=</span> conditional_entropy(x, y)</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a>    x_counter <span class="op">=</span> Counter(x)</span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>    total_occurrences <span class="op">=</span> <span class="bu">sum</span>(x_counter.values())</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>    p_x <span class="op">=</span> [x_count <span class="op">/</span> total_occurrences <span class="cf">for</span> x_count <span class="kw">in</span> x_counter.values()]</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>    s_x <span class="op">=</span> <span class="op">-</span><span class="bu">sum</span>([p <span class="op">*</span> math.log(p) <span class="cf">for</span> p <span class="kw">in</span> p_x])</span>
+<span id="cb28-23"><a href="#cb28-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (s_x <span class="op">-</span> s_xy) <span class="op">/</span> s_x <span class="cf">if</span> s_x <span class="op">!=</span> <span class="dv">0</span> <span class="cf">else</span> <span class="dv">1</span></span>
+<span id="cb28-24"><a href="#cb28-24" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'Gen'</span>, <span class="st">'Eth'</span>, <span class="st">'Fluency'</span>, <span class="st">'SpEd'</span>, <span class="st">'Grade'</span>, <span class="st">'SED'</span>, <span class="st">'Age'</span>, <span class="st">'Year'</span>, <span class="st">'School'</span>, <span class="st">'ChroAbs'</span>]</span>
+<span id="cb28-25"><a href="#cb28-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a href="#cb28-26" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty DataFrame to store Theil's U values</span></span>
+<span id="cb28-27"><a href="#cb28-27" aria-hidden="true" tabindex="-1"></a>theils_u_matrix <span class="op">=</span> pd.DataFrame(index<span class="op">=</span>cat_cols, columns<span class="op">=</span>cat_cols)</span>
+<span id="cb28-28"><a href="#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a href="#cb28-29" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill the matrix with Theil's U values</span></span>
+<span id="cb28-30"><a href="#cb28-30" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col1 <span class="kw">in</span> cat_cols:</span>
+<span id="cb28-31"><a href="#cb28-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col2 <span class="kw">in</span> cat_cols:</span>
+<span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col1 <span class="op">==</span> col2:</span>
+<span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a>            theils_u_matrix.loc[col1, col2] <span class="op">=</span> <span class="dv">1</span>  <span class="co"># Perfect association with itself</span></span>
+<span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>            theils_u_matrix.loc[col1, col2] <span class="op">=</span> theils_u(schools[col1], schools[col2])</span>
+<span id="cb28-36"><a href="#cb28-36" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-37"><a href="#cb28-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to float for heatmap compatibility</span></span>
+<span id="cb28-38"><a href="#cb28-38" aria-hidden="true" tabindex="-1"></a>theils_u_matrix <span class="op">=</span> theils_u_matrix.astype(<span class="bu">float</span>)</span>
+<span id="cb28-39"><a href="#cb28-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-40"><a href="#cb28-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap</span></span>
+<span id="cb28-41"><a href="#cb28-41" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">10</span>))</span>
+<span id="cb28-42"><a href="#cb28-42" aria-hidden="true" tabindex="-1"></a>sns.heatmap(theils_u_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"YlGnBu"</span>, square<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb28-43"><a href="#cb28-43" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">"Theil's U Heatmap of Categorical Variables"</span>)</span>
+<span id="cb28-44"><a href="#cb28-44" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -2153,80 +2435,16 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 </div>
-<div id="cell-38" class="cell" data-outputid="a7d68eed-3495-49e4-9580-8d08862c80c9">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-29-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="heat-map" class="level1">
-<h1>Heat Map</h1>
-<section id="numerical-data-pearsons-correlation-to-visualize-linear-relationship-of-each-pair." class="level3">
-<h3 class="anchored" data-anchor-id="numerical-data-pearsons-correlation-to-visualize-linear-relationship-of-each-pair.">Numerical Data: Pearson’s Correlation to Visualize Linear Relationship of Each Pair.</h3>
-<div id="cell-41" class="cell" data-outputid="4e4a1d39-a0e2-4925-c9d5-ab0432adaa28">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-30-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Observation: Pairs that has high correlation 1. (DaysAbs, AttRate): This is because of their dependency. 2. (DaysEnr, CurrWeightedTotGPA): positive linear relationship with correlation = 0.43. Not interested in this since it does not relate to our problem of chronic absenteeism. 3. (AttRate, CurrWeightedTotGPA): postive linear relationship with correlation = 0.42. Will investigate this further.</p>
-<div id="cell-43" class="cell" data-outputid="868cc18b-9a1b-4b14-f4e9-2461e6982bed">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-31-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="categorical-correlations-using-theils-u-to-visualize-predictive-strength-between-two-categorical-variables" class="level3">
-<h3 class="anchored" data-anchor-id="categorical-correlations-using-theils-u-to-visualize-predictive-strength-between-two-categorical-variables">Categorical Correlations: Using Theil’s U to Visualize Predictive Strength between Two Categorical Variables</h3>
-<p>Using <strong>Theil’s U</strong> to see relationship between categorical variables, range is [0,1] and asymmetric.</p>
-<p>More on this: https://towardsdatascience.com/the-search-for-categorical-correlation-a1cf7f1888c9</p>
-<div id="cell-46" class="cell" data-outputid="e9cd0ea3-31e2-43ed-c3fa-c225b4a747fd">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-32-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 <p>Observation: The factors with the strongest predictive power on Chronic Absenteeism are ranked as follows: Year &gt; School &gt; Age &gt; Grade &gt; Fluency &gt; Ethnicity &gt; SED &gt; SpEd &gt; Gender.</p>
 <p>Additionally, the map shows that Grade has a strong predictive relationship with both School and Age (correlations of 0.81 and 0.67, respectively). This is logical, as schools are divided into levels (e.g., Elementary, Middle, High School), each covering specific grade ranges. Similarly, students are typically placed in grades based on their age. This alignment is reflected in the fact that these three variables—Grade, School, and Age—have similar correlation values with Chronic Absenteeism, indicating they offer comparable predictive power for absenteeism. Therefore, when building a predictive model, it may be beneficial to select only one of these variables to avoid redundancy and reduce model complexity.</p>
 <p>Another noteworthy observation is the moderate predictive power of SED on Year (0.29), while Year has a stronger predictive power on SED (0.7). Further investigation is needed to understand the underlying reasons for this relationship.</p>
-<div id="cell-48" class="cell" data-outputid="4c9d0d9e-6755-4fbf-b30b-44fa22201f4f">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-33-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<div id="cell-49" class="cell" data-outputid="680d3a62-6ca2-4578-a987-b77bd356467d">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-34-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
 </section>
 </section>
 <section id="data-cleaning" class="level1">
 <h1>3. Data Cleaning</h1>
 <p>##3a. Handle Missing Values</p>
-<div id="cell-52" class="cell" data-outputid="4e91f44f-bb34-436c-e3b1-0bf853690a55">
+<div id="cell-50" class="cell" data-outputid="4e91f44f-bb34-436c-e3b1-0bf853690a55">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>schools.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="501">
 <div>
 
@@ -2315,7 +2533,12 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 <p>We need to handle misisng values in columns <code>AttRate</code>,<code>DaysEnr</code>, <code>DaysAbs</code>,<code>Susp</code>, and <code>CurrWeightedTotGPA</code></p>
 <p><strong>Suspension</strong>: Fill all missing values with 0, as students with no suspension records from schools are assumed to have none.</p>
-<div id="cell-56" class="cell" data-outputid="b723ed0f-4e86-49af-ee70-a37b75a535c7">
+<div id="cell-53" class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>schools_cleaned <span class="op">=</span> schools.copy()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-54" class="cell" data-outputid="b723ed0f-4e86-49af-ee70-a37b75a535c7">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'Susp'</span>] <span class="op">=</span> schools_cleaned[<span class="st">'Susp'</span>].fillna(<span class="dv">0</span>)</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="278">
 <div>
 
@@ -2403,7 +2626,10 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 </div>
 <p><strong>AttRate, DaysEnr, and Days Abs</strong>: Some students have records for the following year, meaning missing values for these fields are likely from newly enrolled students. Some students appear only once, suggesting they did not stay enrolled the following year. Since the percentage of these students per school is low, drop those rows with missing values in these columns, as they do not provide meaningful information and do not significantly impact the overall dataset.</p>
-<div id="cell-58" class="cell" data-outputid="8394d12a-ffcc-4b5f-9a12-79f5f4985c88">
+<div id="cell-56" class="cell" data-outputid="8394d12a-ffcc-4b5f-9a12-79f5f4985c88">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at 29 students with NaN Values in AttRate, DaysEnr, and DaysAbs and how many times they appear in the dataset</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> schools_cleaned[schools_cleaned[<span class="st">'DaysEnr'</span>].isnull()][<span class="st">'ANON_ID'</span>].unique()</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>schools_cleaned[schools_cleaned[<span class="st">'ANON_ID'</span>].isin(ids)][<span class="st">'ANON_ID'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="279">
 <div>
 
@@ -2542,7 +2768,9 @@ memory usage: 2.9+ MB</code></pre>
 </div><br><label><b>dtype:</b> int64</label>
 </div>
 </div>
-<div id="cell-59" class="cell" data-outputid="83af0366-5b1f-44b8-d0b8-3c0ab57c1c14">
+<div id="cell-57" class="cell" data-outputid="83af0366-5b1f-44b8-d0b8-3c0ab57c1c14">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at one student</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned[schools_cleaned[<span class="st">'ANON_ID'</span>] <span class="op">==</span> <span class="dv">74195</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="280">
 
   <div id="df-3e1288ec-cbf9-4b43-8c05-9e651e7bc81f" class="colab-df-container">
@@ -2843,7 +3071,9 @@ memory usage: 2.9+ MB</code></pre>
   </div>
 </div>
 </div>
-<div id="cell-60" class="cell" data-outputid="314e570f-e892-49e3-dbd6-3c5c51a3f9f5">
+<div id="cell-58" class="cell" data-outputid="314e570f-e892-49e3-dbd6-3c5c51a3f9f5">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Percentage of missing values with respect to school</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned.groupby(<span class="st">'School'</span>)[<span class="st">'AttRate'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.isna().mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="281">
 <div>
 
@@ -2894,7 +3124,10 @@ memory usage: 2.9+ MB</code></pre>
 </div><br><label><b>dtype:</b> float64</label>
 </div>
 </div>
-<div id="cell-61" class="cell" data-outputid="44d4bd42-938a-4cbe-f8f3-32d6f5f94efd">
+<div id="cell-59" class="cell" data-outputid="44d4bd42-938a-4cbe-f8f3-32d6f5f94efd">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Drop the rows with those missing values of AttRate, DaysEnrolled, DaysAbs</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned.dropna(subset<span class="op">=</span>[<span class="st">'AttRate'</span>, <span class="st">'DaysEnr'</span>, <span class="st">'DaysAbs'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>schools_cleaned.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="282">
 <div>
 
@@ -2987,7 +3220,9 @@ memory usage: 2.9+ MB</code></pre>
 <p>To address this, I propose creating a new variable, Academic Status, which categorizes GPA into four levels:</p>
 <p>Good: GPA ≥ 3.0 Average: 2.0 ≤ GPA &lt; 3.0 At Risk: GPA &lt; 2.0 Unknown: GPA is NaN</p>
 <p>After creating Academic Status, we can drop the GPA column and explore the relationship between this new variable and the response variable, ChroAbs.</p>
-<div id="cell-63" class="cell" data-outputid="30faa28c-1c6c-404f-8b11-8fb30212afc7">
+<div id="cell-61" class="cell" data-outputid="30faa28c-1c6c-404f-8b11-8fb30212afc7">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Percentage of missing GPA in each grade</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>schools.groupby(<span class="st">'Grade'</span>)[<span class="st">'CurrWeightedTotGPA'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.isna().mean())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="336">
 <div>
 
@@ -3066,7 +3301,22 @@ memory usage: 2.9+ MB</code></pre>
 </div><br><label><b>dtype:</b> float64</label>
 </div>
 </div>
-<div id="cell-64" class="cell" data-outputid="a9629bec-2727-42b9-bb17-f542a1cbdb70">
+<div id="cell-62" class="cell" data-outputid="a9629bec-2727-42b9-bb17-f542a1cbdb70">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define a function to categorize academic status based on the given criteria</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> categorize_academic_status(gpa):</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> pd.isna(gpa):</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Unknown"</span></span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> gpa <span class="op">&gt;=</span> <span class="fl">3.0</span>:</span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Good"</span></span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">elif</span> <span class="fl">2.0</span> <span class="op">&lt;=</span> gpa <span class="op">&lt;</span> <span class="fl">3.0</span>:</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"Average"</span></span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">else</span>:</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="st">"AtRisk"</span></span>
+<span id="cb37-11"><a href="#cb37-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-12"><a href="#cb37-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to create a new column 'AcademicStatus'</span></span>
+<span id="cb37-13"><a href="#cb37-13" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'AcademicStatus'</span>] <span class="op">=</span> schools_cleaned[<span class="st">'CurrWeightedTotGPA'</span>].<span class="bu">apply</span>(categorize_academic_status)</span>
+<span id="cb37-14"><a href="#cb37-14" aria-hidden="true" tabindex="-1"></a>schools_cleaned.drop(columns<span class="op">=</span>[<span class="st">'CurrWeightedTotGPA'</span>], inplace<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb37-15"><a href="#cb37-15" aria-hidden="true" tabindex="-1"></a>schools_cleaned.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="340">
 
   <div id="df-9454b71c-e501-46ee-ad86-258f611eaceb" class="colab-df-container">
@@ -3407,7 +3657,8 @@ memory usage: 2.9+ MB</code></pre>
   </div>
 </div>
 </div>
-<div id="cell-65" class="cell" data-outputid="f5d76d94-22eb-4bd2-8410-a8141e983fbf">
+<div id="cell-63" class="cell" data-outputid="f5d76d94-22eb-4bd2-8410-a8141e983fbf">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>schools_cleaned.isna().<span class="bu">sum</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="341">
 <div>
 
@@ -3497,55 +3748,93 @@ memory usage: 2.9+ MB</code></pre>
 </section>
 <section id="missing-values-before-and-after" class="level3">
 <h3 class="anchored" data-anchor-id="missing-values-before-and-after">Missing Values: Before and After</h3>
-<div id="cell-67" class="cell" data-outputid="e93f0e52-1110-455b-a562-be2f7336d903">
+<div id="cell-65" class="cell" data-outputid="e93f0e52-1110-455b-a562-be2f7336d903">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Suspension value before and after</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools, <span class="st">'Susp'</span>, <span class="st">"Suspension Value Before Cleaning"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-45-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-39-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-68" class="cell" data-outputid="a85915d4-85fc-4509-c895-90edc628e215">
+<div id="cell-66" class="cell" data-outputid="a85915d4-85fc-4509-c895-90edc628e215">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools_cleaned, <span class="st">'Susp'</span>, <span class="st">"Suspension Value After Cleaning"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-46-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-40-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-69" class="cell" data-outputid="fbafb238-6f9e-4882-b2de-a49965d2fede">
+<div id="cell-67" class="cell" data-outputid="fbafb238-6f9e-4882-b2de-a49965d2fede">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attendance Rate Before Cleaning</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools, <span class="st">'AttRate'</span>, <span class="st">"Attendance Rate Before Cleaning"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-47-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-41-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-70" class="cell" data-outputid="c0929ef5-1a2a-41c4-c115-1baddcdcb0e7">
+<div id="cell-68" class="cell" data-outputid="c0929ef5-1a2a-41c4-c115-1baddcdcb0e7">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Attendance Rate After Cleaning</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>plot_distribution_and_summary(schools_cleaned, <span class="st">'AttRate'</span>, <span class="st">"Attendance Rate After Cleaning"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-48-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-42-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-71" class="cell" data-outputid="390277c5-26f9-4798-be78-8028d53e410a">
+<div id="cell-69" class="cell" data-outputid="390277c5-26f9-4798-be78-8028d53e410a">
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize Chronic Absenteeism by Academic Status</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Counts of Chronic Absenteeism per Academic Status'</span> ,fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>schools_cleaned, x<span class="op">=</span><span class="st">'AcademicStatus'</span>, hue<span class="op">=</span><span class="st">'ChroAbs'</span>, palette<span class="op">=</span><span class="st">'Paired'</span>)</span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)<span class="op">;</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-49-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-43-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
+<p>Summarization of Data Cleaning:</p>
+<p>Suspension (Susp) had the highest proportion of missing values, with roughly 93% of entries lacking data. I filled these missing values with zeros, assuming that students with no suspension record had no suspensions.</p>
+<p>For Current Weighted Total GPA (CurrWeightedTotGPA), All records for grades -1 through 5 have missing values in the GPA column, with a small percentage of missing values also present for grades 9, 10, and 11. Given the strong correlation between GPA and Absent Rate, as shown in the correlation heatmap in Section 2, it’s essential to retain this column in a way that minimizes noise. We cannot assign a numerical GPA to records in grades -1 to 5, as arbitrary values could misrepresent GPA meaningfully. To address this, I propose creating a new variable, Academic Status, which categorizes GPA into four levels: Good: GPA ≥ 3.0, Average: 2.0 ≤ GPA &lt; 3.0, At Risk: GPA &lt; 2.0, and Unknown: GPA is NaN. After creating Academic Status, I drop the GPA column and explore the relationship between this new variable and the response variable, ChroAbs.</p>
+<p>I also found missing entries in Attendance Rate (AttRate), Days Enrolled (DaysEnr), and Days Absent (DaysAbs), affecting about 0.1% of the dataset with 29 records each. Some students have records for the following year, meaning missing values for these fields are likely from newly enrolled students. Some students appear only once, suggesting they did not stay enrolled the following year. Since the percentage of these students per school is low, drop those rows with missing values in these columns, as they do not provide meaningful information and do not significantly impact the overall dataset.</p>
 </section>
 <section id="b.-handle-duplicates-and-irrelevant-data" class="level2">
 <h2 class="anchored" data-anchor-id="b.-handle-duplicates-and-irrelevant-data">3b. Handle Duplicates and Irrelevant Data</h2>
-<div id="cell-73" class="cell" data-outputid="3f67fa16-c337-426c-8172-bcb095bcec9d">
+<div id="cell-72" class="cell" data-outputid="3f67fa16-c337-426c-8172-bcb095bcec9d">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Frequency of values in each categorical column</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate HTML for each column's value counts</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>html_output <span class="op">=</span> <span class="st">"&lt;div style='display: flex; flex-wrap: wrap;'&gt;"</span></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>cat_cols <span class="op">=</span> [<span class="st">'Gen'</span>, <span class="st">'Eth'</span>, <span class="st">'Fluency'</span>, <span class="st">'SpEd'</span>, <span class="st">'Grade'</span>, <span class="st">'SED'</span>, <span class="st">'Age'</span>, <span class="st">'ChroAbs'</span>]</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> cat_cols:</span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Get the value counts for the column</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>    counts <span class="op">=</span> schools[col].value_counts()</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create an HTML table for the value counts of each column</span></span>
+<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>    html_output <span class="op">+=</span> <span class="ss">f"""</span></span>
+<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;div style='margin-right: 20px; padding: 10px; border: 1px solid #ddd;'&gt;</span></span>
+<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a><span class="ss">        &lt;h4&gt;</span><span class="sc">{</span>col<span class="sc">}</span><span class="ss">&lt;/h4&gt;</span></span>
+<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a><span class="ss">        </span><span class="sc">{</span>counts<span class="sc">.</span>to_frame()<span class="sc">.</span>to_html(header<span class="op">=</span><span class="va">False</span>)<span class="sc">}</span></span>
+<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a><span class="ss">    &lt;/div&gt;</span></span>
+<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a><span class="ss">    """</span></span>
+<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>html_output <span class="op">+=</span> <span class="st">"&lt;/div&gt;"</span></span>
+<span id="cb44-20"><a href="#cb44-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-21"><a href="#cb44-21" aria-hidden="true" tabindex="-1"></a><span class="co"># Display all counts side by side in HTML format</span></span>
+<span id="cb44-22"><a href="#cb44-22" aria-hidden="true" tabindex="-1"></a>display(HTML(html_output))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div style="display: flex; flex-wrap: wrap;">
     <div style="margin-right: 20px; padding: 10px; border: 1px solid #ddd;">
@@ -3908,7 +4197,10 @@ memory usage: 2.9+ MB</code></pre>
 </div>
 <section id="gender-has-one-unsual-value-of-m.-modify-it-to-m" class="level3">
 <h3 class="anchored" data-anchor-id="gender-has-one-unsual-value-of-m.-modify-it-to-m">Gender: has one unsual value of ‘m’. Modify it to “M”</h3>
-<div id="cell-75" class="cell" data-outputid="0ccb03cd-9705-4869-9827-3470b4f3eb9a">
+<div id="cell-74" class="cell" data-outputid="0ccb03cd-9705-4869-9827-3470b4f3eb9a">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Gender has one unsual value of 'm'. Modify it to "M"</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>schools[<span class="st">'Gen'</span>] <span class="op">=</span> schools[<span class="st">'Gen'</span>].replace(<span class="st">'m'</span>, <span class="st">'M'</span>)</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>schools[<span class="st">'Gen'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="156">
 <div>
 
@@ -3947,7 +4239,9 @@ memory usage: 2.9+ MB</code></pre>
 <section id="fluency" class="level3">
 <h3 class="anchored" data-anchor-id="fluency"><strong>Fluency</strong>:</h3>
 <p>There are 100 records labeled as <code>TBD</code> and 6 as<code>Unknown</code> in the Fluency column. Upon examining records with <code>TBD</code>, we find that these are primarily new enrollees. For students who reappear in subsequent years, their Fluency values are recorded in later years. Based on this insight, I fill Unknown or <code>TBD</code> entries in <code>Fluency</code> with matching values from other records with the same <code>ANON_ID</code>. After this process, 68 <code>TBD</code> and 2 <code>Unknown</code> entries remain, representing students who appear only once in the dataset—likely indicating that they did not re-enroll. Even though these students account for only 3% of the dataset, they still provide valuable information in other variables, such as Attendance Rate, SED, SpEd, etc. Therefore, I’ve decided to retain these records rather than dropping them. However, to simplify our model, I will consolidate TBD and Unknown into a single label, Unknown, in the Fluency column. This will help reduce model complexity while preserving the information these records offer.</p>
-<div id="cell-77" class="cell" data-outputid="7e669c68-3b06-44c3-b395-7a115b8256ba">
+<div id="cell-76" class="cell" data-outputid="7e669c68-3b06-44c3-b395-7a115b8256ba">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Look at the records that have Unknown in Fluency</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>schools[schools[<span class="st">'Fluency'</span>] <span class="op">==</span> <span class="st">'Unknown'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="290">
 
   <div id="df-6606d2d0-58b3-44df-a25c-3341a290318f" class="colab-df-container">
@@ -4308,7 +4602,9 @@ memory usage: 2.9+ MB</code></pre>
   </div>
 </div>
 </div>
-<div id="cell-78" class="cell" data-outputid="6c74a1b4-00d1-4656-e5b3-d6974c1ca9b2">
+<div id="cell-77" class="cell" data-outputid="6c74a1b4-00d1-4656-e5b3-d6974c1ca9b2">
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine one student</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>schools[schools[<span class="st">'ANON_ID'</span>] <span class="op">==</span> <span class="dv">78297</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="291">
 
   <div id="df-8d272d3f-5cfd-4f80-a728-752ca40d9e3f" class="colab-df-container">
@@ -4609,7 +4905,23 @@ memory usage: 2.9+ MB</code></pre>
   </div>
 </div>
 </div>
-<div id="cell-80" class="cell" data-outputid="febced9c-e490-4c26-93af-38213a15d62d">
+<div id="cell-78" class="cell">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to fill 'Unknown' or 'TBD' in 'Fluency' with matching 'ANON_ID' values</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_fluency(row):</span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'Fluency'</span>] <span class="kw">in</span> [<span class="st">'Unknown'</span>, <span class="st">'TBD'</span>]:</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Find the first non-null value of 'Fluency' for the same 'ANON_ID'</span></span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>        matching_value <span class="op">=</span> schools_cleaned[(schools_cleaned[<span class="st">'ANON_ID'</span>] <span class="op">==</span> row[<span class="st">'ANON_ID'</span>]) <span class="op">&amp;</span> (schools_cleaned[<span class="st">'Fluency'</span>].notna()) <span class="op">&amp;</span> (<span class="op">~</span>schools_cleaned[<span class="st">'Fluency'</span>].isin([<span class="st">'Unknown'</span>, <span class="st">'TBD'</span>]))]</span>
+<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-7"><a href="#cb48-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If there is a match, return its 'Fluency' value; otherwise, return the original 'Fluency'</span></span>
+<span id="cb48-8"><a href="#cb48-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> matching_value.empty:</span>
+<span id="cb48-9"><a href="#cb48-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> matching_value.iloc[<span class="dv">0</span>][<span class="st">'Fluency'</span>]</span>
+<span id="cb48-10"><a href="#cb48-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> row[<span class="st">'Fluency'</span>]</span>
+<span id="cb48-11"><a href="#cb48-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb48-12"><a href="#cb48-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the 'Fluency' column</span></span>
+<span id="cb48-13"><a href="#cb48-13" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'Fluency'</span>] <span class="op">=</span> schools_cleaned.<span class="bu">apply</span>(fill_fluency, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-79" class="cell" data-outputid="febced9c-e490-4c26-93af-38213a15d62d">
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'Fluency'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="293">
 <div>
 
@@ -4656,12 +4968,15 @@ memory usage: 2.9+ MB</code></pre>
 </div><br><label><b>dtype:</b> int64</label>
 </div>
 </div>
-<div id="cell-81" class="cell" data-outputid="2961222d-509e-46ee-cc82-bacac64d2b55">
+<div id="cell-80" class="cell" data-outputid="2961222d-509e-46ee-cc82-bacac64d2b55">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Percentage of TBD and Unknown left in the dataset: '</span>, <span class="dv">70</span><span class="op">/</span>schools_cleaned.shape[<span class="dv">0</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Percentage of TBD and Unknown left in the dataset:  0.0031868882312770315</code></pre>
 </div>
 </div>
-<div id="cell-82" class="cell" data-outputid="55cdb318-12ab-4b44-e5f2-f2b7ad84e1f5">
+<div id="cell-81" class="cell" data-outputid="55cdb318-12ab-4b44-e5f2-f2b7ad84e1f5">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Examine the students left with </span><span class="al">TBD</span><span class="co"> values in Fluency</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned[schools_cleaned[<span class="st">'Fluency'</span>] <span class="op">==</span> <span class="st">'TBD'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="294">
 
   <div id="df-95e392d8-15ce-46f0-86c9-7af4ba246255" class="colab-df-container">
@@ -5123,7 +5438,10 @@ memory usage: 2.9+ MB</code></pre>
   </div>
 </div>
 </div>
-<div id="cell-83" class="cell" data-outputid="91d369f5-b715-4737-a40c-39dd397d4869">
+<div id="cell-82" class="cell" data-outputid="91d369f5-b715-4737-a40c-39dd397d4869">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Replace all 'TBD' left as 'Unknown' in the dataset</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'Fluency'</span>] <span class="op">=</span> schools_cleaned[<span class="st">'Fluency'</span>].replace(<span class="st">'TBD'</span>, <span class="st">'Unknown'</span>)</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'Fluency'</span>].value_counts()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="295">
 <div>
 
@@ -5171,32 +5489,92 @@ memory usage: 2.9+ MB</code></pre>
 <h3 class="anchored" data-anchor-id="sed"><strong>SED</strong></h3>
 <p>From the Theil’s U correlation heatmap in section 2, I observed a strong predictive relationship between Year and SED. In this section, I’ll explore the reason behind this relationship. By plotting the distribution of SED values across different years, I found that in the two school years 2017-18 and 2018-19, SED values were consistently labeled as Unknown. This finding aligns with the observed relationship between Year and SED in the heatmap.</p>
 <p>Upon further investigation, examining students with Unknown values in SED revealed a pattern: these students often have this column filled with meaningful information in the following school years. Following this pattern, I applied the same process to fill in Unknown values for SED where possible. Although some Unknown values remain, we can retain these records as they still contribute valuable information to other variables.</p>
-<div id="cell-85" class="cell" data-outputid="96072103-e60d-47bf-df6a-6e0d938773ad">
+<div id="cell-84" class="cell" data-outputid="96072103-e60d-47bf-df6a-6e0d938773ad">
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot SED counts per Year</span></span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">5</span>))</span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>schools, y<span class="op">=</span><span class="st">'Year'</span>, hue<span class="op">=</span><span class="st">'SED'</span>, palette<span class="op">=</span><span class="st">'Paired'</span>)</span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'SED Counts per Year'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb54-5"><a href="#cb54-5" aria-hidden="true" tabindex="-1"></a>plt.grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-59-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-53-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
+</div>
+<div id="cell-85" class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to fill 'Unknown' 'SED' with matching 'ANON_ID' values</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fill_SED(row):</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">'SED'</span>] <span class="op">==</span> <span class="st">'Unknown'</span>:</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Find the first non-null value of 'SED' for the same 'ANON_ID'</span></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>        matching_value <span class="op">=</span> schools_cleaned[(schools_cleaned[<span class="st">'ANON_ID'</span>] <span class="op">==</span> row[<span class="st">'ANON_ID'</span>]) <span class="op">&amp;</span> (schools_cleaned[<span class="st">'SED'</span>].notna()) <span class="op">&amp;</span> (<span class="op">~</span>schools_cleaned[<span class="st">'SED'</span>].isin([<span class="st">'Unknown'</span>]))]</span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># If there is a match, return its 'SED' value; otherwise, return the original 'SED'</span></span>
+<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> <span class="kw">not</span> matching_value.empty:</span>
+<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a>            <span class="cf">return</span> matching_value.iloc[<span class="dv">0</span>][<span class="st">'SED'</span>]</span>
+<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> row[<span class="st">'SED'</span>]</span>
+<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the 'SED' column</span></span>
+<span id="cb55-13"><a href="#cb55-13" aria-hidden="true" tabindex="-1"></a>schools_cleaned[<span class="st">'SED'</span>] <span class="op">=</span> schools_cleaned.<span class="bu">apply</span>(fill_SED, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="duplicates-and-irrelevant-before-and-after" class="level3">
 <h3 class="anchored" data-anchor-id="duplicates-and-irrelevant-before-and-after">Duplicates and Irrelevant: Before and After</h3>
-<div id="cell-88" class="cell" data-outputid="f44387b2-0097-4011-ca97-f57731201b0b">
+<div id="cell-87" class="cell" data-outputid="f44387b2-0097-4011-ca97-f57731201b0b">
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co">#SED: Before and after</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a>    nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">24</span>, <span class="dv">10</span>)</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>schools, y<span class="op">=</span><span class="st">'Year'</span>, hue<span class="op">=</span><span class="st">'SED'</span>, palette<span class="op">=</span><span class="st">'Paired'</span>, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">'SED Counts per Year Before Cleaning'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>sns.countplot(data<span class="op">=</span>schools_cleaned, y<span class="op">=</span><span class="st">'Year'</span>, hue<span class="op">=</span><span class="st">'SED'</span>, palette<span class="op">=</span><span class="st">'Paired'</span>, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">'SED Counts per Year After Cleaning'</span>, fontweight<span class="op">=</span><span class="st">'bold'</span>, color<span class="op">=</span><span class="st">'darkblue'</span>)</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].grid(<span class="va">True</span>, linestyle<span class="op">=</span><span class="st">'--'</span>, alpha<span class="op">=</span><span class="fl">0.5</span>)</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-61-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-55-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-<div id="cell-89" class="cell" data-outputid="cc4e6d29-01f1-4a33-f3c0-fdc93f7cc082">
+<div id="cell-88" class="cell" data-outputid="cc4e6d29-01f1-4a33-f3c0-fdc93f7cc082">
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Theil's U Heat Map before and After</span></span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>cat_cols_cleaned <span class="op">=</span> [<span class="st">'Gen'</span>, <span class="st">'Eth'</span>, <span class="st">'Fluency'</span>, <span class="st">'SpEd'</span>, <span class="st">'Grade'</span>, <span class="st">'SED'</span>, <span class="st">'Age'</span>, <span class="st">'Year'</span>, <span class="st">'School'</span>,<span class="st">'AcademicStatus'</span>, <span class="st">'ChroAbs'</span>]</span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create an empty DataFrame to store Theil's U values</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>theils_u_matrix_cleaned <span class="op">=</span> pd.DataFrame(index<span class="op">=</span>cat_cols_cleaned, columns<span class="op">=</span>cat_cols_cleaned)</span>
+<span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Fill the matrix with Theil's U values</span></span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col1 <span class="kw">in</span> cat_cols_cleaned:</span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> col2 <span class="kw">in</span> cat_cols_cleaned:</span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> col1 <span class="op">==</span> col2:</span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>            theils_u_matrix_cleaned.loc[col1, col2] <span class="op">=</span> <span class="dv">1</span>  <span class="co"># Perfect association with itself</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>        <span class="cf">else</span>:</span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>            theils_u_matrix_cleaned.loc[col1, col2] <span class="op">=</span> theils_u(schools_cleaned[col1], schools_cleaned[col2])</span>
+<span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-14"><a href="#cb57-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert to float for heatmap compatibility</span></span>
+<span id="cb57-15"><a href="#cb57-15" aria-hidden="true" tabindex="-1"></a>theils_u_matrix_cleaned <span class="op">=</span> theils_u_matrix_cleaned.astype(<span class="bu">float</span>)</span>
+<span id="cb57-16"><a href="#cb57-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-17"><a href="#cb57-17" aria-hidden="true" tabindex="-1"></a>fig, axs <span class="op">=</span> plt.subplots(</span>
+<span id="cb57-18"><a href="#cb57-18" aria-hidden="true" tabindex="-1"></a>    nrows<span class="op">=</span><span class="dv">1</span>, ncols<span class="op">=</span><span class="dv">2</span>,</span>
+<span id="cb57-19"><a href="#cb57-19" aria-hidden="true" tabindex="-1"></a>    figsize<span class="op">=</span>(<span class="dv">24</span>, <span class="dv">10</span>)</span>
+<span id="cb57-20"><a href="#cb57-20" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb57-21"><a href="#cb57-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-22"><a href="#cb57-22" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the heatmap</span></span>
+<span id="cb57-23"><a href="#cb57-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-24"><a href="#cb57-24" aria-hidden="true" tabindex="-1"></a>sns.heatmap(theils_u_matrix_cleaned, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"YlGnBu"</span>, square<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axs[<span class="dv">1</span>])</span>
+<span id="cb57-25"><a href="#cb57-25" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">1</span>].set_title(<span class="st">"Theil's  U Heatmap of Categorical Variables After Cleaning"</span>)</span>
+<span id="cb57-26"><a href="#cb57-26" aria-hidden="true" tabindex="-1"></a>sns.heatmap(theils_u_matrix, annot<span class="op">=</span><span class="va">True</span>, cmap<span class="op">=</span><span class="st">"YlGnBu"</span>, square<span class="op">=</span><span class="va">True</span>, ax<span class="op">=</span>axs[<span class="dv">0</span>])</span>
+<span id="cb57-27"><a href="#cb57-27" aria-hidden="true" tabindex="-1"></a>axs[<span class="dv">0</span>].set_title(<span class="st">"Theil's U Heatmap of Categorical Variables Before Cleaning"</span>)</span>
+<span id="cb57-28"><a href="#cb57-28" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="DataExploration_files/figure-html/cell-62-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="DataExploration_files/figure-html/cell-56-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -5220,10 +5598,26 @@ memory usage: 2.9+ MB</code></pre>
 </ul>
 <section id="next-steps" class="level2">
 <h2 class="anchored" data-anchor-id="next-steps">5. Next Steps</h2>
+<div id="cell-93" class="cell">
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>X_col <span class="op">=</span> [<span class="st">'Fluency'</span>,<span class="st">'SpEd'</span>,<span class="st">'SED'</span>, <span class="st">'Grade'</span>, <span class="st">'SED'</span>, <span class="st">'Year'</span>, <span class="st">'School'</span>, <span class="st">'AcademicStatus'</span>]</span>
+<span id="cb58-2"><a href="#cb58-2" aria-hidden="true" tabindex="-1"></a>y_col <span class="op">=</span> <span class="st">'ChroAbs'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-94" class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> df_transformed</span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> schools_cleaned[y_col]</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(X, y, test_size<span class="op">=</span><span class="fl">0.2</span>, random_state<span class="op">=</span><span class="dv">42</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-95" class="cell">
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>df_train <span class="op">=</span> pd.concat([X_train, y_train], axis<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>df_test <span class="op">=</span> pd.concat([X_test, y_test], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <p><strong>Next Steps</strong>:<br>
 - Train a classification model using <code>X_train</code> and <code>y_train</code>.<br>
 - Evaluate its accuracy, precision, recall, and other metrics on <code>X_test</code>, <code>y_test</code>.<br>
 - Compare different model types (e.g., logistic regression, decision trees, random forests) to see which performs best in identifying chronically absent students.</p>
+<p><strong>Thank you for reading!</strong> This completes the data exploration phase and sets the stage for more detailed modeling and intervention planning.</p>
 <hr>
 
 
