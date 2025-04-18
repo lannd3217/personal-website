@@ -11,7 +11,7 @@
     "href": "projects.html",
     "title": "Projects",
     "section": "",
-    "text": "A Comprehensive Exploration of Chronic Absenteeism Data Across Seven Schools\n\n\n\n\n\n\n\n\n\n\n\nLan Dinh\n\n\n\n\n\n\nNo matching items"
+    "text": "A Comprehensive Exploration of Chronic Absenteeism Data Across Seven Schools\n\n\n\n\n\n\ndata analysis\n\n\nmachine learning\n\n\n\n\n\n\n\n\n\nLan Dinh\n\n\n\n\n\n\n\n\n\n\n\n\nInference and Prediction of PM2.5 Exposure on Youth’s Mobility Outcomes\n\n\n\n\n\n\ncausal inference\n\n\n\n\n\n\n\n\n\n\n\n\n\nNo matching items"
   },
   {
     "objectID": "posts/chronic-absenteeism/DataExploration.html",
@@ -88,7 +88,7 @@
     "href": "posts/chronic-absenteeism/DataExploration.html#next-steps",
     "title": "A Comprehensive Exploration of Chronic Absenteeism Data Across Seven Schools",
     "section": "5. Next Steps",
-    "text": "5. Next Steps\n\nX_col = ['Fluency','SpEd','SED', 'Grade', 'SED', 'Year', 'School', 'AcademicStatus']\ny_col = 'ChroAbs'\n\n\nfrom sklearn.model_selection import train_test_split\n\nX = df_transformed\ny = schools_cleaned[y_col]\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n\ndf_train = pd.concat([X_train, y_train], axis=1)\ndf_test = pd.concat([X_test, y_test], axis=1)\n\nNext Steps:\n- Train a classification model using X_train and y_train.\n- Evaluate its accuracy, precision, recall, and other metrics on X_test, y_test.\n- Compare different model types (e.g., logistic regression, decision trees, random forests) to see which performs best in identifying chronically absent students.\nThank you for reading! This completes the data exploration phase and sets the stage for more detailed modeling and intervention planning."
+    "text": "5. Next Steps\n\nX_col = ['Fluency','SpEd','SED', 'Grade', 'SED', 'Year', 'School', 'AcademicStatus']\ny_col = 'ChroAbs'\n\n\nfrom sklearn.model_selection import train_test_split\n\nX = df_transformed\ny = schools_cleaned[y_col]\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n\ndf_train = pd.concat([X_train, y_train], axis=1)\ndf_test = pd.concat([X_test, y_test], axis=1)\n\nNext Steps:\n- Train a classification model using X_train and y_train.\n- Evaluate its accuracy, precision, recall, and other metrics on X_test, y_test.\nThank you for reading! This completes the data exploration phase and sets the stage for more detailed modeling and intervention planning."
   },
   {
     "objectID": "index.html",

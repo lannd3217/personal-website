@@ -1,0 +1,16 @@
+
+---
+format: html
+title: "Inference and Prediction of PM2.5 Exposure on Youth’s Mobility Outcomes"
+authour: "Lan Dinh, Faith Dennis, Huy Dao, Anand Shankar"
+image: "AirPollutionLA.webp"
+categories:
+  - causal inference
+---
+
+
+<iframe 
+  width="1000" 
+  height="1000" 
+  src="Data_102_Final_Project.pdf">
+</iframe>
