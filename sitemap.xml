@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://lannd3217.github.io/personal-website/about.html</loc>
-    <lastmod>2025-03-21T00:29:33.080Z</lastmod>
+    <loc>https://lannd3217.github.io/personal-website/index.html</loc>
+    <lastmod>2025-03-21T00:29:33.125Z</lastmod>
   </url>
   <url>
-    <loc>https://lannd3217.github.io/personal-website/projects.html</loc>
-    <lastmod>2025-03-21T05:16:34.123Z</lastmod>
+    <loc>https://lannd3217.github.io/personal-website/posts/causal-inference/index.html</loc>
+    <lastmod>2025-04-18T04:33:47.017Z</lastmod>
   </url>
   <url>
     <loc>https://lannd3217.github.io/personal-website/resume.html</loc>
@@ -14,10 +14,10 @@
   </url>
   <url>
     <loc>https://lannd3217.github.io/personal-website/posts/chronic-absenteeism/DataExploration.html</loc>
-    <lastmod>2025-03-24T04:11:22.260Z</lastmod>
+    <lastmod>2025-04-18T03:55:33.209Z</lastmod>
   </url>
   <url>
-    <loc>https://lannd3217.github.io/personal-website/index.html</loc>
-    <lastmod>2025-03-21T00:29:33.125Z</lastmod>
+    <loc>https://lannd3217.github.io/personal-website/projects.html</loc>
+    <lastmod>2025-04-18T04:23:21.709Z</lastmod>
   </url>
 </urlset>
